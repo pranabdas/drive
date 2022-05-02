@@ -1,0 +1,86 @@
+name: Deploy gh-pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install wget
+        run: sudo apt update && sudo apt install -y wget
+
+      - name: Prepare Ruby and Jekyll
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+
+      - name: Install ruby dependencies
+        run: bundle install
+
+      - name: Get latest 404 page
+        run: |
+          if [ -f "404.html" ] ; then
+            rm 404.html
+          fi
+          wget https://pranabdas.github.io/404.html -O ./404.html
+          sed -i.bak '/<script>/,/<\/script>/d' ./404.html
+          sed -i.bak '/<head>/a\
+          \    <script>\
+          \        var jekyllPages = [];\
+          \        {% for item in site.static_files %}\
+          \        jekyllPages.push("{{ site.url }}{{ site.baseurl }}{{ item.path }}");\
+          \        {% endfor %}\
+          \        {% for page in site.pages %}jekyllPages.push("{{ site.url }}{{ site.baseurl }}{{ page.url }}");\
+          \        {% endfor %}\
+          \        {% for post in site.posts %}jekyllPages.push("{{ site.url }}{{ site.baseurl }}{{ post.url }}");\
+          \        {% endfor %}\
+          \        for (let jj = 0; jj < jekyllPages.length; jj++)  {\
+          \          if (jekyllPages[jj].slice(-1) === "/") {\
+          \            jekyllPages[jj] = jekyllPages[jj].slice(0, -1);\
+          \          }\
+          \          if (jekyllPages[jj].slice(-11).toLowerCase() === "/index.html"){\
+          \            jekyllPages[jj] = jekyllPages[jj].slice(0, -11);\
+          \          }\
+          \        }\
+          \        function jekyllFixCaseSensitiveUrl() {\
+          \            let url = window.location.toString();\
+          \            if (url.slice(-1) === "/") {\
+          \                url = url.slice(0, -1);\
+          \            }\
+          \            if (url.slice(-11).toLowerCase() === "/index.html"){\
+          \                url = url.slice(0, -11);\
+          \            }\
+          \            let page = jekyllPages.map(function (value) {\
+          \                return value.toLowerCase();\
+          \            });\
+          \            let i = page.indexOf(url.toLowerCase());\
+          \            if (i !== -1) {\
+          \                window.location = jekyllPages[i];\
+          \            }\
+          \        }\
+          \        window.onload = jekyllFixCaseSensitiveUrl();\
+          \    </script>\
+          ' ./404.html
+          front_matter=`echo -e "---\n---\n"; cat ./404.html`
+          echo "$front_matter" > ./404.html
+          rm ./404.html.bak
+
+      - name: Build website
+        run: bundle exec jekyll build
+
+      - name: Deploy on gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
