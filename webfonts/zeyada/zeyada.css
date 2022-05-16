@@ -3,6 +3,6 @@
   font-style: normal;
   font-weight: 400;
   src: local(''),
-       url('./zeyada-v13-latin-regular.woff2') format('woff2'),
-       url('./zeyada-v13-latin-regular.woff') format('woff');
+    url('./zeyada-v15-latin-regular.woff2') format('woff2'),
+    url('./zeyada-v15-latin-regular.woff') format('woff');
 }
