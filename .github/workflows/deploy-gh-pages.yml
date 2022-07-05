@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
 
@@ -22,7 +22,7 @@ jobs:
       - name: Prepare Ruby and Jekyll
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '3.1'
 
       - name: Install ruby dependencies
         run: bundle install
@@ -74,6 +74,13 @@ jobs:
           front_matter=`echo -e "---\n---\n"; cat ./404.html`
           echo "$front_matter" > ./404.html
           rm ./404.html.bak
+          mkdir -p assets/css
+          mkdir -p assets/webfonts
+          wget https://pranabdas.github.io/assets/css/main.css -O assets/css/main.css
+          wget https://pranabdas.github.io/assets/css/academicons.min.css -O assets/css/academicons.min.css
+          wget https://pranabdas.github.io/assets/css/fontawesome.css -O assets/css/fontawesome.css
+          wget https://pranabdas.github.io/assets/webfonts/fa-solid-900.ttf -O assets/webfonts/fa-solid-900.ttf
+          wget https://pranabdas.github.io/assets/webfonts/fa-solid-900.woff2 -O assets/webfonts/fa-solid-900.woff2
 
       - name: Build website
         run: bundle exec jekyll build
