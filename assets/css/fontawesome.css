@@ -1,0 +1,161 @@
+.fa {
+    font-family: var(--fa-style-family, "Font Awesome 6 Free");
+    font-weight: var(--fa-style, 900);
+}
+
+.fa,
+.fas,
+.fa-solid,
+.far,
+.fa-regular,
+.fal,
+.fa-light,
+.fat,
+.fa-thin,
+.fad,
+.fa-duotone,
+.fab,
+.fa-brands {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: var(--fa-display, inline-block);
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Brands';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.ttf") format("truetype");
+}
+
+.fab,
+.fa-brands {
+    font-family: 'Font Awesome 6 Brands';
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Free';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("../webfonts/fa-regular-400.woff2") format("woff2"), url("../webfonts/fa-regular-400.ttf") format("truetype");
+}
+
+.far,
+.fa-regular {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 400;
+}
+
+:root,
+:host {
+    --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free";
+}
+
+.fas,
+.fa-solid {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Free';
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.ttf") format("truetype");
+}
+
+.fa-house::before {
+    content: "\f015";
+}
+
+.fa-calendar-days::before {
+    content: "\f073";
+}
+
+.fa-key::before {
+    content: "\f084";
+}
+
+.fa-tag::before {
+    content: "\f02b";
+}
+
+.fa-tags::before {
+    content: "\f02c";
+}
+
+.fa-bookmark::before {
+    content: "\f02e";
+}
+
+.fa-arrow-up-right-from-square::before {
+    content: "\f08e";
+}
+
+.fa-link::before {
+    content: "\f0c1";
+}
+
+.fa-bars::before {
+    content: "\f0c9";
+}
+
+.fa-envelope::before {
+    content: "\f0e0";
+}
+
+.fa-square-rss::before {
+    content: "\f143";
+}
+
+.fa-file-pdf::before {
+    content: "\f1c1";
+}
+
+.fa-paper-plane::before {
+    content: "\f1d8";
+}
+
+.fa-pen::before {
+    content: "\f304";
+}
+
+.fa-location-dot::before {
+    content: "\f3c5";
+}
+
+.fa-circle-question::before {
+    content: "\f059";
+}
+
+.fa-twitter:before {
+    content: "\f099";
+}
+
+.fa-github:before {
+    content: "\f09b";
+}
+
+.fa-500px:before {
+    content: "\f26e";
+}
+
+.fa-app-store:before {
+    content: "\f36f";
+}
+
+.fa-react:before {
+    content: "\f41b";
+}
+
+.fa-readme:before {
+    content: "\f4d5";
+}
