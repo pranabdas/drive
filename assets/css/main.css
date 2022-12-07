@@ -495,7 +495,7 @@ a.tag:hover { background: rgba(237, 41, 122, 0.1); color: #ed297a; }
 
 .pagination { font-size: 1rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Open Sans", Helvetica, Arial, sans-serif; font-weight: normal; text-align: center; }
 
-.pagination a, .pagination .disabled { -webkit-transition: all 0.2s ease-in-out; -moz-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; background: #f2f2f2; border-radius: 0.1875em; border: 1px solid #f3f3f3; color: #333333; padding: 0.5em; }
+.pagination a, .pagination .disabled { -webkit-transition: all 0.2s ease-in-out; -moz-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out; background: #f2f2f2; border-radius: 0.1875em; border: 1px solid lightgray; color: #333333; padding: 0.5em; }
 
 .pagination .disabled, .pagination .pagination-meta { opacity: 0.5; }
 
