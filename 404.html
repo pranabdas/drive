@@ -366,7 +366,6 @@
         if (jekyllPages[jj].slice(-1) === "/") {
             jekyllPages[jj] = jekyllPages[jj].slice(0, -1);
         }
-
         if (jekyllPages[jj].slice(-11).toLowerCase() === "/index.html"){
             jekyllPages[jj] = jekyllPages[jj].slice(0, -11);
         }
@@ -390,6 +389,8 @@
             window.location.assign("https://pranabdas.github.io/404");
         }
     }
-    window.onload = jekyllFixCaseSensitiveUrl();
+    if (window.location.toString().toLowerCase() !== "https://pranabdas.github.io/drive/404.html") {
+        window.onload = jekyllFixCaseSensitiveUrl();
+    }
 </script>
 
