@@ -376,22 +376,20 @@
         let url = window.location.toString();
         if (url.slice(-1) === "/"){
             url = url.slice(0, -1);
-        } else if (url.slice(-11).toLowerCase() === "/index.html") {
+        }
+        if (url.slice(-11).toLowerCase() === "/index.html") {
             url = url.slice(0, -11);
         }
         let pageList = jekyllPages.map(function(value) {
             return value.toLowerCase();
         });
         let i = pageList.indexOf(url.toLowerCase());
-
         if (i !== -1) {
             window.location = jekyllPages[i];
         } else {
-            window.location.replace("https://pranabdas.github.io/404.html");
+            window.location.href = "https://pranabdas.github.io/404.html";
         }
     }
-    if (window.location.toString().toLowerCase() !== "https://pranabdas.github.io/drive/404.html") {
-        window.onload = jekyllFixCaseSensitiveUrl();
-    }
+    window.onload = jekyllFixCaseSensitiveUrl();
 </script>
 
