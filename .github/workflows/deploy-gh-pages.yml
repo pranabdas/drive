@@ -1,8 +1,6 @@
 name: Deploy gh-pages
 
 on:
-  schedule:
-    - cron: '0 0 1 1 *'
   push:
     branches:
       - main
@@ -16,9 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install wget
-        run: sudo apt update && sudo apt install -y wget
-
       - name: Prepare Ruby and Jekyll
         uses: ruby/setup-ruby@v1
         with:
@@ -26,61 +21,6 @@ jobs:
 
       - name: Install ruby dependencies
         run: bundle install
-
-      - name: Get latest 404 page
-        run: |
-          if [ -f "404.html" ] ; then
-            rm 404.html
-          fi
-          wget https://pranabdas.github.io/404.html -O ./404.html
-          sed -i.bak '/<script>/,/<\/script>/d' ./404.html
-          sed -i.bak '/<head>/a\
-          \    <script>\
-          \        var jekyllPages = [];\
-          \        {% for item in site.static_files %}\
-          \        jekyllPages.push("{{ site.url }}{{ site.baseurl }}{{ item.path }}");\
-          \        {% endfor %}\
-          \        {% for page in site.pages %}jekyllPages.push("{{ site.url }}{{ site.baseurl }}{{ page.url }}");\
-          \        {% endfor %}\
-          \        {% for post in site.posts %}jekyllPages.push("{{ site.url }}{{ site.baseurl }}{{ post.url }}");\
-          \        {% endfor %}\
-          \        for (let jj = 0; jj < jekyllPages.length; jj++)  {\
-          \          if (jekyllPages[jj].slice(-1) === "/") {\
-          \            jekyllPages[jj] = jekyllPages[jj].slice(0, -1);\
-          \          }\
-          \          if (jekyllPages[jj].slice(-11).toLowerCase() === "/index.html"){\
-          \            jekyllPages[jj] = jekyllPages[jj].slice(0, -11);\
-          \          }\
-          \        }\
-          \        function jekyllFixCaseSensitiveUrl() {\
-          \            let url = window.location.toString();\
-          \            if (url.slice(-1) === "/") {\
-          \                url = url.slice(0, -1);\
-          \            }\
-          \            if (url.slice(-11).toLowerCase() === "/index.html"){\
-          \                url = url.slice(0, -11);\
-          \            }\
-          \            let page = jekyllPages.map(function (value) {\
-          \                return value.toLowerCase();\
-          \            });\
-          \            let i = page.indexOf(url.toLowerCase());\
-          \            if (i !== -1) {\
-          \                window.location = jekyllPages[i];\
-          \            }\
-          \        }\
-          \        window.onload = jekyllFixCaseSensitiveUrl();\
-          \    </script>\
-          ' ./404.html
-          front_matter=`echo -e "---\n---\n"; cat ./404.html`
-          echo "$front_matter" > ./404.html
-          rm ./404.html.bak
-          mkdir -p assets/css
-          mkdir -p assets/webfonts
-          wget https://pranabdas.github.io/assets/css/main.css -O assets/css/main.css
-          wget https://pranabdas.github.io/assets/css/academicons.min.css -O assets/css/academicons.min.css
-          wget https://pranabdas.github.io/assets/css/fontawesome.css -O assets/css/fontawesome.css
-          wget https://pranabdas.github.io/assets/webfonts/fa-solid-900.ttf -O assets/webfonts/fa-solid-900.ttf
-          wget https://pranabdas.github.io/assets/webfonts/fa-solid-900.woff2 -O assets/webfonts/fa-solid-900.woff2
 
       - name: Build website
         run: bundle exec jekyll build
